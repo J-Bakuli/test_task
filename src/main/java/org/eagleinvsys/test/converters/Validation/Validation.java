@@ -3,13 +3,18 @@ package org.eagleinvsys.test.converters.Validation;
 import org.eagleinvsys.test.converters.ConvertibleCollection;
 
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Map;
 
 public class Validation {
-    public static void checkConvertibleCollection(ConvertibleCollection convertibleCollection) {
+    public static void checkIfConvertibleCollectionIsEmpty(ConvertibleCollection convertibleCollection) {
         if (convertibleCollection == null || convertibleCollection.getHeaders().isEmpty()) {
             throw new IllegalArgumentException("ConvertibleCollection should not be null");
         }
+    }
+
+    public static boolean checkIfCollectionToConvertIsEmpty(List<Map<String, String>> collectionToConvert) {
+        return collectionToConvert == null || collectionToConvert.isEmpty();
     }
 
     public static void checkOutputStream(OutputStream outputStream) {
