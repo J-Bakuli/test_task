@@ -32,49 +32,22 @@ public class CsvConverter implements Converter {
         Collection<String> headers = collectionToConvert.getHeaders();
         Iterator<ConvertibleMessage> iterator = collectionToConvert.getRecords().iterator();
 
-/*      convertHeaders(headers, outputStream);
-        convertMessage(iterator, outputStream);*/
-
         try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
-             CSVWriter csvWriter = new CSVWriter(bufferedWriter)) {
+             CSVWriter csvWriter = new CSVWriter(bufferedWriter,
+                     CSVWriter.DEFAULT_SEPARATOR,
+                     CSVWriter.NO_QUOTE_CHARACTER,
+                     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                     CSVWriter.RFC4180_LINE_END)) {
             csvWriter.writeNext(headers.toArray(new String[0]));
-            List<?> lines = IteratorUtils.toList(iterator);
+            List<?> lines = IteratorUtils.toList(collectionToConvert.getRecords().iterator());
             while (iterator.hasNext()) {
                 for (Object line : lines) {
                     String element = iterator.next().getElement(line.toString());
-                    csvWriter.writeNext(new String[]{element});
+                    csvWriter.writeNext(new String[]{element, element});
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-/*    private void convertHeaders(Collection<String> headers, OutputStream outputStream) {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
-             CSVWriter csvWriter = new CSVWriter(bufferedWriter)) {
-            csvWriter.writeNext(headers.toArray(new String[0]));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void convertMessage(Iterator<? extends ConvertibleMessage> iterator, OutputStream outputStream) {
-        List<?> lines = IteratorUtils.toList(iterator);
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
-             CSVWriter csvWriter = new CSVWriter(bufferedWriter)) {
-            while (iterator.hasNext()) {
-                for (Object line : lines) {
-                    if (iterator instanceof ConvertibleMessage) {
-                        String element = iterator.next().getElement(line.toString());
-                        csvWriter.writeNext(new String[]{element});
-                    } else {
-                        csvWriter.writeNext(new String[]{line.toString()});
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
 }
