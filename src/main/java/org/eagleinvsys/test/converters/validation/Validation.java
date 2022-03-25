@@ -14,16 +14,7 @@ public class Validation {
     }
 
     public static boolean checkIfStandardCollectionToConvertIsEmpty(List<Map<String, String>> standardCollectionToConvert) {
-        if (standardCollectionToConvert == null || standardCollectionToConvert.isEmpty()) {
-            throw new IllegalArgumentException("Collection to convert should not be null");
-        }
-        return false;
-    }
-
-    public static void checkIfStandardCollectionToConvertIsEmptyException(List<Map<String, String>> standardCollectionToConvert) {
-        if (standardCollectionToConvert == null || standardCollectionToConvert.isEmpty()) {
-            throw new IllegalArgumentException("Collection to convert should not be null");
-        }
+        return standardCollectionToConvert == null || standardCollectionToConvert.isEmpty();
     }
 
     public static void checkOutputStream(OutputStream outputStream) {
