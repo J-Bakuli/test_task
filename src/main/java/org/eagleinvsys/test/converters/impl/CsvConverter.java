@@ -43,7 +43,7 @@ public class CsvConverter implements Converter {
             while (iterator.hasNext()) {
                 for (Object line : lines) {
                     String element = iterator.next().getElement(line.toString());
-                    csvWriter.writeNext(new String[]{element, element});
+                    csvWriter.writeNext(new String[]{element, element});//for 2 columns
                 }
             }
         } catch (IOException e) {
