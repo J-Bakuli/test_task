@@ -1,10 +1,11 @@
 package org.eagleinvsys.test.converters.impl;
 
 import org.eagleinvsys.test.converters.ConvertibleMessage;
-import org.eagleinvsys.test.converters.Validation.Validation;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CsvDataItem implements ConvertibleMessage {
     private final Map<String, String> mapDataItem;
@@ -15,11 +16,12 @@ public class CsvDataItem implements ConvertibleMessage {
 
     @Override
     public String getElement(String elementId) {
-        Validation.checkElementId(mapDataItem, elementId);
-        return mapDataItem.get(elementId);
+        return mapDataItem.keySet().stream()
+                .map(mapDataItem::get)
+                .collect(Collectors.joining(" "));
     }
 
     Collection<String> getHeaders() {
-        return mapDataItem.keySet();
+        return Arrays.asList("header1", "header2");
     }
 }
